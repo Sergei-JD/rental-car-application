@@ -4,13 +4,12 @@
 CREATE TABLE IF NOT EXISTS users
 (
     user_id    BIGSERIAL PRIMARY KEY,
-    first_name VARCHAR(128)        NOT NULL,
-    last_name  VARCHAR(128)        NOT NULL,
-    age        NUMERIC(3)          NOT NULL,
+    first_name VARCHAR(256)        NOT NULL,
+    last_name  VARCHAR(256)        NOT NULL,
+    age        INTEGER             NOT NULL CHECK (users.age > 0),
     email      VARCHAR(256) UNIQUE NOT NULL,
     password   VARCHAR(256)        NOT NULL,
-    gender     VARCHAR(64),
-    phone_num  NUMERIC(12)         NOT NULL
+    gender     VARCHAR(64)
 );
 
 -- -----------------------------------------------------
@@ -27,8 +26,8 @@ CREATE TABLE IF NOT EXISTS role
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS user_role
 (
-    user_id INT NOT NULL,
-    role_id INT NOT NULL,
+    user_id BIGINT NOT NULL,
+    role_id INT    NOT NULL,
     PRIMARY KEY (user_id, role_id)
 );
 
@@ -41,7 +40,8 @@ CREATE TABLE IF NOT EXISTS account
     user_id           BIGINT       NOT NULL,
     nick_name         VARCHAR(256) NOT NULL,
     password          VARCHAR(256) NOT NULL,
-    driver_licence_id NUMERIC(32)  NOT NULL,
+    phone_num         INTEGER      NOT NULL,
+    driver_licence_id VARCHAR(32)  NOT NULL,
     credit_card_id    BIGINT       NOT NULL
 );
 
@@ -50,13 +50,26 @@ CREATE TABLE IF NOT EXISTS account
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS credit_card
 (
-    credit_card_id  BIGSERIAL PRIMARY KEY,
-    type            VARCHAR(128) NOT NULL,
-    card_number     NUMERIC(64)  NOT NULL,
-    date_of_issue   TIMESTAMP    NOT NULL,
-    expiration_date TIMESTAMP    NOT NULL,
-    cv_code         NUMERIC(3)   NOT NULL,
-    name_card_owner VARCHAR(256) NOT NULL
+    credit_card_id   BIGSERIAL PRIMARY KEY,
+    credit_card_type VARCHAR(128) NOT NULL,
+    card_number      CHAR(12)     NOT NULL,
+    date_of_issue    TIMESTAMP    NOT NULL,
+    expiration_date  TIMESTAMP    NOT NULL,
+    cvv_code         CHAR(3)      NOT NULL,
+    name_card_owner  VARCHAR(256) NOT NULL,
+    balance          NUMERIC
+);
+
+-- -----------------------------------------------------
+-- Table driver_license
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS driver_license
+(
+    driver_license_id     BIGSERIAL PRIMARY KEY,
+    driver_license_number VARCHAR(32) NOT NULL,
+    category              VARCHAR(32) NOT NULL,
+    date_of_issue         TIMESTAMP   NOT NULL,
+    expiration_date       TIMESTAMP   NOT NULL
 );
 
 -- *****************************************************
@@ -69,11 +82,11 @@ CREATE TABLE IF NOT EXISTS orders
     order_id        BIGSERIAL PRIMARY KEY,
     account_id      BIGINT      NOT NULL,
     invoice_id      BIGINT      NOT NULL,
-    credit_card_id  NUMERIC(12) NOT NULL,
-    parking_id      INT         NOT NULL,
+    credit_card_id  BIGINT      NOT NULL,
+    parking_id      INTEGER     NOT NULL,
     start_date_rent TIMESTAMP   NOT NULL,
-    end_date_rent   TIMESTAMP   NOT NULL,
-    status          VARCHAR(64) NOT NULL
+    end_date_rent   TIMESTAMP   NOT NULL CHECK (orders.end_date_rent >= orders.start_date_rent),
+    order_status    VARCHAR(64) NOT NULL
 );
 
 -- -----------------------------------------------------
@@ -82,23 +95,12 @@ CREATE TABLE IF NOT EXISTS orders
 CREATE TABLE IF NOT EXISTS invoice
 (
     invoice_id        BIGSERIAL PRIMARY KEY,
-    payment_id        BIGINT      NOT NULL,
-    amount            MONEY       NOT NULL,
-    rental_period     NUMERIC(3)  NOT NULL,
-    distance_traveled NUMERIC(5)  NOT NULL,
+    account_id        BIGINT      NOT NULL,
+    amount            NUMERIC CHECK (invoice.amount >= 0),
+    rental_period     INTEGER CHECK (invoice.rental_period > 0),
+    distance_traveled INTEGER CHECK (invoice.distance_traveled >= 0),
     payment_date      TIMESTAMP   NOT NULL,
     invoice_status    VARCHAR(64) NOT NULL
-);
-
--- -----------------------------------------------------
--- Table payment
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS payment
-(
-    payment_id     BIGSERIAL PRIMARY KEY,
-    user_id        BIGINT NOT NULL,
-    account_id     BIGINT NOT NULL,
-    credit_card_id BIGINT NOT NULL
 );
 
 -- -----------------------------------------------------
@@ -108,7 +110,7 @@ CREATE TABLE IF NOT EXISTS parking
 (
     parking_id    SERIAL PRIMARY KEY,
     address       VARCHAR(256) NOT NULL,
-    level         NUMERIC(2)   NOT NULL,
+    level         VARCHAR(3)   NOT NULL,
     parking_space VARCHAR(5)   NOT NULL
 );
 
@@ -121,12 +123,12 @@ CREATE TABLE IF NOT EXISTS car
 (
     car_id              BIGSERIAL PRIMARY KEY,
     registration_number VARCHAR(8)   NOT NULL,
-    type_car            VARCHAR(32),
-    year_of_manufacture NUMERIC(4)   NOT NULL,
+    car_type            VARCHAR(32)  NOT NULL,
+    year_of_manufacture CHAR(4)      NOT NULL,
     make                VARCHAR(128) NOT NULL,
     model               VARCHAR(128) NOT NULL,
     colour              VARCHAR(32)  NOT NULL,
-    number_of_seats     NUMERIC(2)
+    number_of_seats     INTEGER
 );
 
 -- -----------------------------------------------------
@@ -135,14 +137,27 @@ CREATE TABLE IF NOT EXISTS car
 CREATE TABLE IF NOT EXISTS catalog
 (
     catalog_id          SERIAL PRIMARY KEY,
-    type_car            VARCHAR(32),
-    year_of_manufacture NUMERIC(4)   NOT NULL,
+    car_type            VARCHAR(32),
+    year_of_manufacture CHAR(4)      NOT NULL,
     make                VARCHAR(128) NOT NULL,
     model               VARCHAR(128) NOT NULL,
     colour              VARCHAR(32)  NOT NULL,
     image               BYTEA        NOT NULL,
-    price               MONEY        NOT NULL,
-    status_car          VARCHAR(32)  NOT NULL
+    price               DECIMAL      NOT NULL,
+    car_status          VARCHAR(32)  NOT NULL,
+    number_of_seats     VARCHAR(2)
 );
 
 COMMIT;
+
+DROP TABLE users;
+DROP TABLE role;
+DROP TABLE user_role;
+DROP TABLE account;
+DROP TABLE credit_card;
+DROP TABLE driver_license;
+DROP TABLE orders;
+DROP TABLE invoice;
+DROP TABLE parking;
+DROP TABLE car;
+DROP TABLE catalog;
