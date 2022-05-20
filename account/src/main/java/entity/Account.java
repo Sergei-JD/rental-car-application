@@ -44,7 +44,7 @@ public class Account extends BaseEntity {
     private String password;
 
     @Column(name = "phone_num", nullable = false)
-    private Integer phoneNum;
+    private Long phoneNum;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<DriverLicense> driverLicenses = new HashSet<>();
