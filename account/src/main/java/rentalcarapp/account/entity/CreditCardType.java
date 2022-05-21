@@ -1,4 +1,4 @@
-package entity;
+package rentalcarapp.account.entity;
 
 public enum CreditCardType {
     VISA,

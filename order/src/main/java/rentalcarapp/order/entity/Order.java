@@ -1,5 +1,7 @@
-package entity;
+package rentalcarapp.order.entity;
 
+import rentalcarapp.account.entity.Account;
+import rentalcarapp.account.entity.CreditCard;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

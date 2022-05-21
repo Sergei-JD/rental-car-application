@@ -1,4 +1,4 @@
-package entity;
+package rentalcarapp.car.entity;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 
 @Data
 @Entity
@@ -22,14 +23,15 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode(callSuper = false, of =
-        {"carId", "registrationNumber", "carType", "yearOfManufacture", "make", "model", "colour", "numberOfSeats"})
-@Table(name = "car", schema = "PUBLIC")
-public class Car extends BaseEntity {
+        {"carCatalogId", "registrationNumber", "carType", "yearOfManufacture", "make",
+                "model", "colour", "numberOfSeats", "image", "price", "carStatus"})
+@Table(name = "car_catalog", schema = "PUBLIC")
+public class CarCatalog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "car_id", nullable = false)
-    private Long carId;
+    @Column(name = "car_catalog_id", nullable = false)
+    private Long carCatalogId;
 
     @Column(name = "registration_number", nullable = false)
     private String registrationNumber;
@@ -52,4 +54,14 @@ public class Car extends BaseEntity {
 
     @Column(name = "number_of_seats")
     private Integer numberOfSeats;
+
+    @Column(name = "image", nullable = false)
+    private byte[] image;
+
+    @Column(name = "price", nullable = false)
+    private BigDecimal price;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "car_status", nullable = false)
+    private CarStatus carStatus;
 }

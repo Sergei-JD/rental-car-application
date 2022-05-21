@@ -1,4 +1,4 @@
-package entity;
+package rentalcarapp.order.entity;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

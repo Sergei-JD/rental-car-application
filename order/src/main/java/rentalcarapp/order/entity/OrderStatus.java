@@ -1,4 +1,4 @@
-package entity;
+package rentalcarapp.order.entity;
 
 public enum OrderStatus {
     PENDING,

@@ -1,4 +1,4 @@
-package entity;
+package rentalcarapp.car.entity;
 
 public enum CarType {
     UNIVERSAL,

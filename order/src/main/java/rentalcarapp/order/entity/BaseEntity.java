@@ -1,6 +1,5 @@
-package entity;
+package rentalcarapp.order.entity;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
