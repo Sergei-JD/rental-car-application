@@ -10,8 +10,6 @@ CREATE TABLE IF NOT EXISTS car_catalog
     make                VARCHAR(128) NOT NULL,
     model               VARCHAR(128) NOT NULL,
     colour              VARCHAR(32)  NOT NULL,
-    number_of_seats     INTEGER CHECK (car_catalog.number_of_seats >= 1),
-    image               BYTEA        NOT NULL,
     price               DECIMAL      NOT NULL,
     car_status          VARCHAR(32)  NOT NULL
 

@@ -1,18 +1,18 @@
 -- -----------------------------------------------------
 -- Insert table user
 -- -----------------------------------------------------
-INSERT INTO users (user_id, first_name, last_name, age, email, password, gender)
-            VALUES (1, 'Ivan', 'Ivanov', 46, 'ivan@email.com', '1111', 'MALE');
-INSERT INTO users (user_id, first_name, last_name, age, email, password, gender)
-            VALUES (2, 'Petr', 'Petrov', 32, 'petr@email.com', '2222', 'MALE');
-INSERT INTO users (user_id, first_name, last_name, age, email, password, gender)
-            VALUES (3, 'Sergey', 'Sergeev', 28, 'sergey@email.com', '3333', 'MALE');
-INSERT INTO users (user_id, first_name, last_name, age, email, password, gender)
-            VALUES (4, 'Sveta', 'Svetikova', 51, 'sveta@email.com', '4444', 'FEMALE');
-INSERT INTO users (user_id, first_name, last_name, age, email, password, gender)
-            VALUES (5, 'Maria', 'Marieva', 22, 'maria@email.com', '5555', 'FEMALE');
-INSERT INTO users (user_id, first_name, last_name, age, email, password, gender)
-            VALUES (6, 'Valentina', 'Valentinova', 47, 'valentina@email.com', '6666', 'FEMALE');
+INSERT INTO users (user_id, first_name, last_name, age, email, password, gender, role)
+            VALUES (1, 'Ivan', 'Ivanov', 46, 'ivan@email.com', '1111', 'MALE', 'ADMIN');
+INSERT INTO users (user_id, first_name, last_name, age, email, password, gender, role)
+            VALUES (2, 'Petr', 'Petrov', 32, 'petr@email.com', '2222', 'MALE', 'CUSTOMER');
+INSERT INTO users (user_id, first_name, last_name, age, email, password, gender, role)
+            VALUES (3, 'Sergey', 'Sergeev', 28, 'sergey@email.com', '3333', 'MALE', 'MECHANIC');
+INSERT INTO users (user_id, first_name, last_name, age, email, password, gender, role)
+            VALUES (4, 'Sveta', 'Svetikova', 51, 'sveta@email.com', '4444', 'FEMALE', 'CUSTOMER');
+INSERT INTO users (user_id, first_name, last_name, age, email, password, gender, role)
+            VALUES (5, 'Maria', 'Marieva', 22, 'maria@email.com', '5555', 'FEMALE', 'CUSTOMER');
+INSERT INTO users (user_id, first_name, last_name, age, email, password, gender, role)
+            VALUES (6, 'Valentina', 'Valentinova', 47, 'valentina@email.com', '6666', 'FEMALE', 'CUSTOMER');
 
 -- -----------------------------------------------------
 -- Insert table driver_license

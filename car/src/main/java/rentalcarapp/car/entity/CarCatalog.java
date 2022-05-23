@@ -24,7 +24,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode(callSuper = false, of =
         {"carCatalogId", "registrationNumber", "carType", "yearOfManufacture", "make",
-                "model", "colour", "numberOfSeats", "image", "price", "carStatus"})
+                "model", "colour", "price", "carStatus"})
 @Table(name = "car_catalog", schema = "PUBLIC")
 public class CarCatalog {
 
@@ -51,12 +51,6 @@ public class CarCatalog {
 
     @Column(name = "colour", nullable = false)
     private String colour;
-
-    @Column(name = "number_of_seats")
-    private Integer numberOfSeats;
-
-    @Column(name = "image", nullable = false)
-    private byte[] image;
 
     @Column(name = "price", nullable = false)
     private BigDecimal price;

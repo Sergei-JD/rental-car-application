@@ -9,26 +9,8 @@ CREATE TABLE IF NOT EXISTS users
     age        INTEGER             NOT NULL CHECK (users.age > 0),
     email      VARCHAR(256) UNIQUE NOT NULL,
     password   VARCHAR(256)        NOT NULL,
-    gender     VARCHAR(64)
-);
-
--- -----------------------------------------------------
--- Table role
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS role
-(
-    role_id SERIAL PRIMARY KEY,
-    name    VARCHAR(64) NOT NULL
-);
-
--- -----------------------------------------------------
--- Table user_role
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS user_role
-(
-    user_id BIGINT NOT NULL,
-    role_id INT    NOT NULL,
-    PRIMARY KEY (user_id, role_id)
+    gender     VARCHAR(64),
+    role       VARCHAR(64)         NOT NULL
 );
 
 -- -----------------------------------------------------
@@ -40,7 +22,7 @@ CREATE TABLE IF NOT EXISTS account
     user_id           BIGINT       NOT NULL,
     nick_name         VARCHAR(256) NOT NULL,
     password          VARCHAR(256) NOT NULL,
-    phone_num         BIGINT      NOT NULL,
+    phone_num         BIGINT       NOT NULL,
     driver_licence_id VARCHAR(32)  NOT NULL,
     credit_card_id    BIGINT       NOT NULL
 );
