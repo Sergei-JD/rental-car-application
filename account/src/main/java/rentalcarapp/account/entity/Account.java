@@ -24,8 +24,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@EqualsAndHashCode(callSuper = false, of =
-        {"accountId", "userId", "nickName", "password", "phoneNum", "creditCards"})
+@EqualsAndHashCode(callSuper = false, of = {"accountId", "userId", "nickName", "password", "phoneNum"})
 @Table(name = "account", schema = "PUBLIC")
 public class Account extends BaseEntity {
 
@@ -43,12 +42,6 @@ public class Account extends BaseEntity {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "phone_num", nullable = false)
-    private Long phoneNum;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<DriverLicense> driverLicenses = new HashSet<>();
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<CreditCard> creditCards = new HashSet<>();
+    @Column(name = "phone_number", nullable = false)
+    private Long phoneNumber;
 }

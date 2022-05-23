@@ -18,13 +18,11 @@ CREATE TABLE IF NOT EXISTS users
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS account
 (
-    account_id        BIGSERIAL PRIMARY KEY,
-    user_id           BIGINT       NOT NULL,
-    nick_name         VARCHAR(256) NOT NULL,
-    password          VARCHAR(256) NOT NULL,
-    phone_num         BIGINT       NOT NULL,
-    driver_licence_id VARCHAR(32)  NOT NULL,
-    credit_card_id    BIGINT       NOT NULL
+    account_id BIGSERIAL PRIMARY KEY,
+    user_id    BIGINT       NOT NULL UNIQUE,
+    nick_name  VARCHAR(256) NOT NULL,
+    password   VARCHAR(256) NOT NULL,
+    phone_number  BIGINT       NOT NULL
 );
 
 -- -----------------------------------------------------
@@ -39,7 +37,8 @@ CREATE TABLE IF NOT EXISTS credit_card
     expiration_date  TIMESTAMP    NOT NULL,
     cvv_code         CHAR(3)      NOT NULL,
     name_card_owner  VARCHAR(256) NOT NULL,
-    balance          NUMERIC
+    balance          NUMERIC,
+    account_id       BIGINT REFERENCES account (account_id)
 );
 
 -- -----------------------------------------------------
@@ -51,7 +50,13 @@ CREATE TABLE IF NOT EXISTS driver_license
     driver_license_number VARCHAR(32) NOT NULL,
     category              VARCHAR(32) NOT NULL,
     date_of_issue         TIMESTAMP   NOT NULL,
-    expiration_date       TIMESTAMP   NOT NULL
+    expiration_date       TIMESTAMP   NOT NULL,
+    account_id            BIGINT REFERENCES account (account_id)
 );
+
+-- DROP TABLE users;
+-- DROP TABLE driver_license;
+-- DROP TABLE credit_card;
+-- DROP TABLE account;
 
 COMMIT;

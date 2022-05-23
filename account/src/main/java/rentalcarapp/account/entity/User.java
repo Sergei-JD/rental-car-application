@@ -12,9 +12,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -56,6 +58,8 @@ public class User extends BaseEntity {
     @Column(name = "role", nullable = false)
     private Role role;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Account account;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,
+    fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "account_id")
+    private Account accountId;
 }

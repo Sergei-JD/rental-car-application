@@ -7,13 +7,17 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -25,7 +29,7 @@ import java.time.Instant;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode(callSuper = false, of =
         {"creditCardId", "creditCardType", "cardNumber", "dateOfIssue",
-                "expirationDate", "cvvCode", "nameCardOwner", "balance"})
+                "expirationDate", "cvvCode", "nameCardOwner", "balance", "accountId"})
 @Table(name = "credit_card", schema = "PUBLIC")
 public class CreditCard {
 
@@ -55,4 +59,8 @@ public class CreditCard {
 
     @Column(name = "balance")
     private BigDecimal balance;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id")
+    private Account accountId;
 }
