@@ -1,21 +1,25 @@
 package rentalcarapp.order.entity;
 
-import rentalcarapp.account.entity.User;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import rentalcarapp.account.entity.User;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -27,7 +31,7 @@ import java.time.Instant;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode(callSuper = false, of =
         {"invoiceId", "customerId", "amount", "startDateRent", "endDateRent",
-                "rentalPeriod", "paymentDate", "invoiceStatus"})
+                "rentalPeriod", "paymentDate", "invoiceStatus", "orderId"})
 @Table(name = "invoice", schema = "PUBLIC")
 public class Invoice extends BaseEntity {
 
@@ -36,8 +40,8 @@ public class Invoice extends BaseEntity {
     @Column(name = "invoice_id", nullable = false)
     private Long invoiceId;
 
-    @ManyToOne
-    @Column(name = "user_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
     private User customerId;
 
     @Column(name = "amount")
@@ -58,4 +62,9 @@ public class Invoice extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "invoice_status", nullable = false)
     private InvoiceStatus invoiceStatus;
+
+    @OneToOne(mappedBy = "invoice", cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "order_id")
+    private Order orderId;
 }

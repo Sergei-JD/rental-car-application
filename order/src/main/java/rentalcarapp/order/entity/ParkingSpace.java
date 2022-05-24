@@ -6,12 +6,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import rentalcarapp.account.entity.Account;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Data
@@ -19,7 +23,7 @@ import javax.persistence.Table;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@EqualsAndHashCode(callSuper = false, of = {"parkingSpaceId", "address", "level", "numberSpace"})
+@EqualsAndHashCode(callSuper = false, of = {"parkingSpaceId", "address", "level", "numberSpace", "orderId"})
 @Table(name = "parking_space", schema = "PUBLIC")
 public class ParkingSpace extends BaseEntity {
 
@@ -36,4 +40,8 @@ public class ParkingSpace extends BaseEntity {
 
     @Column(name = "number_space", nullable = false)
     private String numberSpace;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id", nullable = false)
+    private Order orderId;
 }

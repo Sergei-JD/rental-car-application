@@ -6,14 +6,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import rentalcarapp.order.entity.Order;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 
@@ -23,8 +27,8 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode(callSuper = false, of =
-        {"carCatalogId", "registrationNumber", "carType", "yearOfManufacture", "make",
-                "model", "colour", "price", "carStatus"})
+        {"carCatalogId", "registrationNumber", "carType", "yearOfManufacture",
+                "make", "model", "colour", "price", "carStatus", "orderId"})
 @Table(name = "car_catalog", schema = "PUBLIC")
 public class CarCatalog {
 
@@ -58,4 +62,8 @@ public class CarCatalog {
     @Enumerated(EnumType.STRING)
     @Column(name = "car_status", nullable = false)
     private CarStatus carStatus;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id", nullable = false)
+    private Order orderId;
 }

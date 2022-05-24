@@ -59,7 +59,7 @@ public class User extends BaseEntity {
     private Role role;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,
-    fetch = FetchType.LAZY, optional = false)
+            fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "account_id")
     private Account accountId;
 }
